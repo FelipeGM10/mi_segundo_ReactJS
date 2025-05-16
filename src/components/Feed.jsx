@@ -1,9 +1,23 @@
-import React from 'react'
-import { posts } from '../services/post'
+import React, { useEffect, useState } from 'react'
+import { getActores, posts } from '../services/post'
 import Post from './Post'
 
 const Feed = () => {
-    console.log('Datos de la API', posts)
+
+       const [datos, setDatos] = useState([]);
+       const apiURL = 'http://localhost:3001/series';
+    
+       useEffect(() => {
+          fetch(apiURL)
+             .then((response) => response.json())
+             .then((data) => {
+                console.log('Datos del Feed', data);
+                setDatos(data);
+             })
+             .catch((err) => {
+                console.log(err.message);
+             });
+       }, []);
 
     const handlePressButton = (get) => {
         console.log(`${get} viene del hijo`)
@@ -11,14 +25,15 @@ const Feed = () => {
     
   return (
     <div>
-        {posts.map((post, index) => (
+        {datos.map((datos, index) => (
             <Post 
-                id={post.id} 
-                key={index} 
-                username={post.username} 
-                content={post.content} 
-                avatar={post.avatar} 
-                timestamp={post.timestamp}
+                id={datos.serie_id} 
+                key_index={index} 
+                title={datos.titulo}
+                description={datos.descripcion}
+                release={datos.año_lanzamiento}
+                genre={datos.genero}
+                rating={datos.rating}
                 buttonPressed={handlePressButton}
             />
         ))}

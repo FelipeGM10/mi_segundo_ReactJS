@@ -22,6 +22,27 @@ export const posts = [
     },
 ];
 
+export const getActores = async () => {
+    
+    const apiURL = 'http://localhost:3001/actores';
+    
+    fetch(apiURL,{
+        method: "GET",
+        dataType: "json",
+        headers: {
+            'Content-Type': 'application/json'
+            }
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('console de data',data)
+        return data
+    })
+    .catch(error => {
+        console.error('Error fetching data: :(', error);
+    });
+  }
+
 export const getData = () => {
     fetch('https://jsonplaceholder.typicode.com/posts')
     .then((response) => response.json())

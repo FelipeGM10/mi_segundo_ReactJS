@@ -1,7 +1,15 @@
 import React from 'react'
 import Boton from './Boton'
+import Stars from './Stars'
 
-const Post = ({index, avatar, username, content, timestamp, buttonPressed}) => {
+const Post = ({id,
+                key_index,
+                title,
+                description,
+                release,
+                genre,
+                rating,
+                buttonPressed}) => {
 
     const handleLocalPressButton = () => {
         console.log('Button pressed in child component')
@@ -9,17 +17,23 @@ const Post = ({index, avatar, username, content, timestamp, buttonPressed}) => {
 
     const handlePressButtonToFather = () => {
         console.log('Button pressed in child component to father')
-        buttonPressed(`${username} from father`)
+        buttonPressed(`${title} from father`)
     }
 
   return (
-    <div key={index} className="card mb-3">
+    <div key={key_index} className="card mb-3">
         <div className="card-body">
             <div className="d-flex align-items-center">
-                <img src={avatar} alt={`${username}'s avatar`} className="rounded-circle me-2" width="40" />
-                <h5 className="card-title">{username}</h5>
+                {/* <img src={} alt={`${nombre}'s avatar`} className="rounded-circle me-2" width="40" /> */}
+                <h5 className="card-title">{id + ' - ' + title}</h5>
             </div>
-            <p className="card-text">{content}</p>
+            <p className="card-text">{'Genero: '+genre}</p>
+            <p className="card-text"><small className="text-muted">{release}</small></p>
+            <p className="card-text">{description}</p>
+            <Stars 
+                totalStars={5}
+                rating={rating}
+            />
             <Boton
                 nombre="Press me for father"
                 funcion={handlePressButtonToFather}
@@ -28,7 +42,7 @@ const Post = ({index, avatar, username, content, timestamp, buttonPressed}) => {
                 nombre="Press me local"
                 funcion={handleLocalPressButton}
             />
-            <p className="card-text"><small className="text-muted">{timestamp}</small></p>
+            
         </div>
     </div>
   )
